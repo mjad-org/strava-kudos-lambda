@@ -1,0 +1,29 @@
+service: strava-kudos-lambda
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  memorySize: 1536
+  timeout: 90
+  region: eu-west-1
+ 
+functions:
+  kudos:
+    handler: kudos.handler
+    environment:
+      DEBUG: 0
+    events:
+      - schedule:
+          rate: cron(*/30 * * * ? *)
+          enabled: true
+
+package:
+  artifact: ./package.zip
+  
+plugins:
+  - serverless-hooks-plugin
+
+custom:
+  hooks:
+    package:initialize:
+      - npm run package
