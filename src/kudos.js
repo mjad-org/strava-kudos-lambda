@@ -1,5 +1,4 @@
 const setup = require('./pupp/setup');
-const puppeteer = require('puppeteer');
 
 exports.handler = async (event, context, callback) => {
   // For keeping the browser launch
@@ -29,14 +28,13 @@ exports.run = async (browser) => {
     await page.waitFor(1000);
 
     // Go To Club Activity
-    await page.goto('https://www.strava.com/clubs/28521/recent_activity');
+    await page.goto(process.env.STRAVA_CLUB_URL);
     await page.waitFor(1000);
 
     // Give Kudos to recent activity on page
     await page.$$eval('button[title="Give Kudos"]', (buttons) => {
         buttons.map((button) => {
             button.click();
-            await page.waitFor(200);
             console.log('Kudos Given!!');
         });
     });

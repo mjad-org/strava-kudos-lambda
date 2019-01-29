@@ -1,5 +1,5 @@
-const aws = require('aws-sdk');
-const s3 = new aws.S3({apiVersion: '2006-03-01'});
+// const aws = require('aws-sdk');
+// const s3 = new aws.S3({apiVersion: '2006-03-01'});
 const fs = require('fs');
 const tar = require('tar');
 const puppeteer = require('puppeteer');
@@ -11,7 +11,7 @@ exports.getBrowser = (() => {
     if (typeof browser === 'undefined' || !await isBrowserAvailable(browser)) {
       await setupChrome();
       browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         executablePath: config.executablePath,
         args: config.launchOptionForLambda,
         dumpio: !!exports.DEBUG,

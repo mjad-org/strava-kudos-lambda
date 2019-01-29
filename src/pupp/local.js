@@ -7,7 +7,6 @@ const puppeteer = require('puppeteer');
         headless: true,
         slowMo: process.env.SLOWMO_MS,
         dumpio: !!config.DEBUG,
-        // use chrome installed by puppeteer
     });
     await kudos.run(browser)
     .then((result) => console.log(result))

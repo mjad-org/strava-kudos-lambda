@@ -2,6 +2,7 @@ service: strava-kudos-lambda
 
 provider:
   name: aws
+  stage: prod
   runtime: nodejs6.10
   memorySize: 1536
   timeout: 90
@@ -14,7 +15,7 @@ functions:
       DEBUG: 0
     events:
       - schedule:
-          rate: cron(*/30 * * * ? *)
+          rate: rate(4 hours)
           enabled: true
 
 package:
