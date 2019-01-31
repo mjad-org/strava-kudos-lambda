@@ -7,6 +7,7 @@ const launchOptionForLambda = [
     '--disable-gpu',
     // freeze when newPage()
     '--single-process',
+    '--headless',
 ];
 
 const localChromePath = path.join('headless_shell.tar.gz');

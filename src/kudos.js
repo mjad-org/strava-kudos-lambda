@@ -14,28 +14,26 @@ exports.handler = async (event, context, callback) => {
 
 exports.run = async (browser) => {
     const page = await browser.newPage();
-
     await page.setViewport({width: 1280, height: 1024});
-    await page.goto('https://www.strava.com/');
-    await page.click('a.btn-login');
+    await page.goto('https://www.strava.com/login', {waitUntil: 'networkidle2'});
     await page.waitForSelector('form');
-
-    // Login
     await page.type('input#email', process.env.STRAVA_EMAIL);
     await page.type('input#password', process.env.STRAVA_PASSWORD);
-    await page.click('button#login-button');
-    await page.waitForNavigation({waitUntil: 'networkidle2'});
-    await page.waitFor(1000);
+    await page.waitFor(200);
+    await page.evaluate(()=>document
+      .querySelector('button#login-button')
+      .click()
+    );
+    await page.waitForNavigation();
+    await page.goto(process.env.STRAVA_CLUB_URL, {waitUntil: 'networkidle2'});
+    await page.waitFor(2000);
+    console.log('Club URL loaded');
 
-    // Go To Club Activity
-    await page.goto(process.env.STRAVA_CLUB_URL);
-    await page.waitFor(1000);
-
-    // Give Kudos to recent activity on page
+    // Give Kudos to recent club activity on page
     await page.$$eval('button[title="Give Kudos"]', (buttons) => {
-        buttons.map((button) => {
-            button.click();
-            console.log('Kudos Given!!');
+        buttons.map(async (button) => {
+          console.log("kudos given");
+          button.click();
         });
     });
 

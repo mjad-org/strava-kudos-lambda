@@ -3,9 +3,9 @@ service: strava-kudos-lambda
 provider:
   name: aws
   stage: prod
-  runtime: nodejs6.10
+  runtime: nodejs8.10
   memorySize: 1536
-  timeout: 90
+  timeout: 60
   region: eu-west-1
  
 functions:
@@ -13,6 +13,7 @@ functions:
     handler: kudos.handler
     environment:
       DEBUG: 0
+      STRAVA_CLUB_URL: "https://strava.com/clubs/28521/recent_activity"
     events:
       - schedule:
           rate: rate(4 hours)
