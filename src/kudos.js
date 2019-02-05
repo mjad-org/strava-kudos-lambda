@@ -1,24 +1,36 @@
 const setup = require('./pupp/setup');
 
 exports.handler = async (event, context, callback) => {
-  // For keeping the browser launch
   context.callbackWaitsForEmptyEventLoop = false;
+
+  let params = {
+    CiphertextBlob: Buffer.from(process.env.STRAVA_PASSWORD, 'base64')
+  }
+
+  let STRAVA_PASSWORD = null;
+  try {
+    const decrypted = await kms.decrypt(params).promise();
+    STRAVA_PASSWORD = decrypted.Plaintext.toString('utf-8');
+  } catch (exception) {
+    console.error(exception)
+  }
+
   const browser = await setup.getBrowser();
   try {
-    const result = await exports.run(browser);
-    callback(null, result);
+    const result = await exports.run(browser, STRAVA_PASSWORD);
+    return result;
   } catch (e) {
-    callback(e);
+    return e;
   }
 };
 
-exports.run = async (browser) => {
+exports.run = async (browser, STRAVA_PASSWORD) => {
     const page = await browser.newPage();
     await page.setViewport({width: 1280, height: 1024});
     await page.goto('https://www.strava.com/login', {waitUntil: 'networkidle2'});
     await page.waitForSelector('form');
     await page.type('input#email', process.env.STRAVA_EMAIL);
-    await page.type('input#password', process.env.STRAVA_PASSWORD);
+    await page.type('input#password', STRAVA_PASSWORD);
     await page.waitFor(200);
     await page.evaluate(()=>document
       .querySelector('button#login-button')
