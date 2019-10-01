@@ -10,7 +10,7 @@
     "lint": "./node_modules/.bin/eslint src"
   },
   "dependencies": {
-    "puppeteer": "^1.11.0",
+    "puppeteer": "^1.20.0",
     "tar": "^4.4.8"
   },
   "devDependencies": {
