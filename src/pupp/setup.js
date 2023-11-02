@@ -61,12 +61,12 @@ const existsExecutableChrome = () => {
 const setupLocalChrome = () => {
   return new Promise((resolve, reject) => {
     fs.createReadStream(config.localChromePath)
-    .on('error', (err) => reject(err))
-    .pipe(tar.x({
-      C: config.setupChromePath,
-    }))
-    .on('error', (err) => reject(err))
-    .on('end', () => resolve());
+        .on('error', (err) => reject(err))
+        .pipe(tar.x({
+          C: config.setupChromePath,
+        }))
+        .on('error', (err) => reject(err))
+        .on('end', () => resolve());
   });
 };
 
@@ -76,7 +76,7 @@ const debugLog = (log) => {
     let message = log;
     if (typeof log === 'function') message = log();
     Promise.resolve(message).then(
-      (message) => console.log(message)
+        (message) => console.log(message),
     );
   }
 };

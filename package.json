@@ -1,6 +1,6 @@
 {
   "name": "strava-kudos-lambda",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Give Strava Kudos to Recent Activity in a given club page",
   "scripts": {
     "package": "npm run package-prepare && cp chrome/headless_shell.tar.gz dist && cd dist && zip -rq ../package.zip .",
@@ -10,15 +10,15 @@
     "lint": "./node_modules/.bin/eslint src"
   },
   "dependencies": {
-    "puppeteer": "^1.20.0",
-    "tar": "^4.4.8"
+    "puppeteer": "^21.5.0",
+    "tar": "^6.2.0"
   },
   "devDependencies": {
-    "aws-sdk": "^2.395.0",
+    "aws-sdk": "^2.1159.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
-    "eslint": "^4.6.1",
-    "eslint-config-google": "^0.9.1",
+    "eslint": "^8.52.0",
+    "eslint-config-google": "^0.14.0",
     "serverless-hooks-plugin": "^1.1.0"
   }
 }
